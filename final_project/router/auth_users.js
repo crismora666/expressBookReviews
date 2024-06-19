@@ -52,16 +52,23 @@ regd_users.post("/login", (req,res) => {
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
-  // Update the code here
-  if (req.body.){
-    friends[req.body.email] = {
-        "firstName":req.body.firstName,
-        "lastName":req.body.lastName,
-        "DOB":req.body.DOB,
-        }
-    }
-    res.send("The user" + (' ')+ (req.body.firstName) + " Has been added!");
+  const isbn = req.params.isbn;
+  let isdnbook = books.filter((book) => book.isbn === isbn);
+  let others = books.filter((book) => book.isbn != isbn);
+  isdnbook[0].reviews = req.body.review
+  others.push(isdnbook[0])
+  books = others
+    res.send("The book" + (' ')+ (isdnbook[0].title) + " Has been added!");
 });
+
+// Delete a book review
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    const isbn = req.params.isbn;
+    let isdnbook = books.filter((book) => book.isbn === isbn);
+    let others = books.filter((book) => book.isbn != isbn);
+    books = others
+      res.send("The book" + (' ')+ (isdnbook[0].title) + " Has been deleted!");
+  });
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
