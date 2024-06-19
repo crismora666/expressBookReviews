@@ -53,4 +53,51 @@ public_users.get('/review/:isbn',function (req, res) {
     res.send(filtered_books[0].reviews);
 });
 
+//  Get books with Promise
+public_users.get('/promise/',function (req, res) {
+    let myPromise = new Promise((resolve,reject) => {
+        all_books = JSON.stringify(books,null,4)
+        resolve(all_books)
+    })
+    myPromise.then((successMessage) => {
+        res.send(successMessage);
+    })
+});
+
+//  Get books with Promise by ISBN
+public_users.get('/promise/isbn',function (req, res) {
+    let myPromise = new Promise((resolve,reject) => {
+        const isbn = req.params.isbn;
+        let filtered_books = books.filter((book) => book.isbn === isbn);
+        resolve(filtered_books)
+    })
+    myPromise.then((successMessage) => {
+        res.send(successMessage);
+    })
+});
+
+//  Get books with Promise by author
+public_users.get('/promise/author',function (req, res) {
+    let myPromise = new Promise((resolve,reject) => {
+        const author = req.params.author;
+        let filtered_books = books.filter((book) => book.author === author);
+        resolve(filtered_books)
+    })
+    myPromise.then((successMessage) => {
+        res.send(successMessage);
+    })
+});
+
+//  Get books with Promise by title
+public_users.get('/promise/title',function (req, res) {
+    let myPromise = new Promise((resolve,reject) => {
+        const title = req.params.title;
+        let filtered_books = books.filter((book) => book.title === title);
+        resolve(filtered_books)
+    })
+    myPromise.then((successMessage) => {
+        res.send(successMessage);
+    })
+});
+
 module.exports.general = public_users;
